@@ -1,6 +1,14 @@
 # Atmos — Weather Dashboard
 
+> **Internship Training Submission** — developed as the final submission project for the internship training program at **Naviotech Pvt Ltd**.
+
+Live on Vercel: **[Live demo](https://weather-dashboard-naviotech.vercel.app)** ← *replace with your actual Vercel URL after deploying*
+
+[![Live Demo](https://img.shields.io/badge/Live-Hosted%20on%20Vercel-black?logo=vercel)](https://weather-dashboard-naviotech.vercel.app) !! REPLACE URL AFTER DEPLOYING !!
+
 A full-stack internship project built with **Python Flask**, vanilla **HTML/CSS/JavaScript**, **OpenWeather API**, and **MongoDB Atlas**.
+
+**Developed during internship training at Naviotech Pvt Ltd.** This is a submission project showcasing full-stack skills: REST API integration, noSQL persistence with MongoDB, secure credential handling, and responsive dashboard design.
 
 ## Features
 
@@ -172,7 +180,12 @@ Manual integration checklist:
 
 ## Deployment notes
 
-A compatible WSGI host can run:
+**Deployed on Vercel.**
+
+- Deployed using Vercel's Python runtime; `OPENWEATHER_API_KEY`, `MONGODB_URI`, and `MONGODB_DATABASE` are set as Vercel environment variables — never committed to the repo.
+- Because Vercel serverless functions use dynamic outbound IPs, MongoDB Atlas Network Access must allow `0.0.0.0/0` for the deployment to reach the cluster (this is standard for serverless hosting and is compensated for by the Atlas database user's credential security).
+
+A compatible WSGI host can also run:
 ```bash
 gunicorn app:app
 ```
