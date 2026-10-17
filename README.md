@@ -2,9 +2,9 @@
 
 > **Internship Training Submission** — developed as the final submission project for the internship training program at **Naviotech Pvt Ltd**.
 
-Live on Vercel: **[Live demo](https://weather-dashboard-naviotech.vercel.app)** ← *replace with your actual Vercel URL after deploying*
+Live on Vercel: **[weather-dashboard-iota-snowy.vercel.app](https://weather-dashboard-iota-snowy.vercel.app)**
 
-[![Live Demo](https://img.shields.io/badge/Live-Hosted%20on%20Vercel-black?logo=vercel)](https://weather-dashboard-naviotech.vercel.app) !! REPLACE URL AFTER DEPLOYING !!
+[![Live Demo](https://img.shields.io/badge/Live-Hosted%20on%20Vercel-black?logo=vercel)](https://weather-dashboard-iota-snowy.vercel.app)
 
 A full-stack internship project built with **Python Flask**, vanilla **HTML/CSS/JavaScript**, **OpenWeather API**, and **MongoDB Atlas**.
 
