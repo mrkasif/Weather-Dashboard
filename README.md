@@ -180,8 +180,9 @@ Manual integration checklist:
 
 ## Deployment notes
 
-**Deployed on Vercel.**
+**Deployed on Vercel:** https://weather-dashboard-iota-snowy.vercel.app
 
+- Deployments track this repository; pushing to `main` updates Production automatically.
 - Deployed using Vercel's Python runtime; `OPENWEATHER_API_KEY`, `MONGODB_URI`, and `MONGODB_DATABASE` are set as Vercel environment variables — never committed to the repo.
 - Because Vercel serverless functions use dynamic outbound IPs, MongoDB Atlas Network Access must allow `0.0.0.0/0` for the deployment to reach the cluster (this is standard for serverless hosting and is compensated for by the Atlas database user's credential security).
 
