@@ -8,20 +8,23 @@
 
 /* ---------- 1. Design tokens ---------- */
 :root {
-  --bg: #0b0f1a;
-  --bg-soft: #0e1422;
-  --panel: #131b2c;
-  --panel-2: #182134;
-  --panel-3: #1c2740;
-  --border: #26334c;
-  --border-soft: #1e2940;
-  --text: #f2f5fa;
-  --muted: #96a2b8;
-  --faint: #6d7b93;
-  --lime: #b8f36d;
-  --lime-strong: #cdfb8d;
-  --lime-ink: #1b2807;
-  --lime-dim: rgba(184, 243, 109, 0.12);
+  --bg: #06070f;
+  --bg-soft: #0a0c17;
+  --panel: #10121f;
+  --panel-2: #151826;
+  --panel-3: #1b1f33;
+  --border: #272b45;
+  --border-soft: #1f2338;
+  --text: #f2f4fb;
+  --muted: #9aa2c4;
+  --faint: #6f7799;
+  --lime: #7ee7c7;              /* aurora mint: primary interactive accent */
+  --lime-strong: #a4f2da;
+  --lime-ink: #06121a;
+  --lime-dim: rgba(126, 231, 199, 0.12);
+  --aurora-teal: #4fd1c5;
+  --aurora-violet: #977ff0;
+  --aurora-rose: #f2789f;
   --accent-blue: #8fc3ff;
   --accent-violet: #cdb4ff;
   --accent-amber: #ffd88e;
@@ -33,33 +36,36 @@
   --radius-xs: 9px;
   --font: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
   --mono: "DM Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-  --shadow: 0 14px 34px rgba(2, 6, 16, 0.45);
-  --shadow-sm: 0 6px 18px rgba(2, 6, 16, 0.35);
+  --shadow: 0 14px 34px rgba(2, 4, 14, 0.5);
+  --shadow-sm: 0 6px 18px rgba(2, 4, 14, 0.4);
 }
 
 [data-theme="light"] {
-  --bg: #edf1ea;
-  --bg-soft: #e4eae1;
+  --bg: #f0f1fa;
+  --bg-soft: #e8eaf5;
   --panel: #ffffff;
-  --panel-2: #f3f6f1;
-  --panel-3: #e9efe6;
-  --border: #d8e0d3;
-  --border-soft: #e4eae0;
-  --text: #17241b;
-  --muted: #5d6d61;
-  --faint: #85937f;
-  --lime: #4d7c0f;
-  --lime-strong: #3f6212;
-  --lime-ink: #f7fee7;
-  --lime-dim: rgba(77, 124, 15, 0.12);
+  --panel-2: #f5f6fb;
+  --panel-3: #edeff8;
+  --border: #dcdfee;
+  --border-soft: #e6e8f2;
+  --text: #191c2d;
+  --muted: #5f6683;
+  --faint: #8890ad;
+  --lime: #0d8f74;
+  --lime-strong: #0b7f66;
+  --lime-ink: #f7fefb;
+  --lime-dim: rgba(13, 143, 116, 0.1);
+  --aurora-teal: #2aa39b;
+  --aurora-violet: #7a5cd0;
+  --aurora-rose: #d9548c;
   --accent-blue: #1d6fd1;
   --accent-violet: #6d3fd1;
   --accent-amber: #9a6a00;
   --danger: #b4232a;
   --danger-bg: #fdecec;
   --danger-border: #f3b8bc;
-  --shadow: 0 14px 30px rgba(35, 55, 35, 0.12);
-  --shadow-sm: 0 6px 16px rgba(35, 55, 35, 0.1);
+  --shadow: 0 14px 30px rgba(38, 42, 82, 0.12);
+  --shadow-sm: 0 6px 16px rgba(38, 42, 82, 0.1);
 }
 
 /* ---------- 2. Base ---------- */
@@ -74,20 +80,44 @@ body {
   margin: 0;
   min-height: 100vh;
   overflow-x: clip;
-  background:
-    radial-gradient(1100px 480px at 85% -8%, rgba(184, 243, 109, 0.06), transparent 60%),
-    radial-gradient(900px 520px at -10% 20%, rgba(143, 195, 255, 0.07), transparent 55%),
-    var(--bg);
+  background: var(--bg);
   color: var(--text);
   font-family: var(--font);
   font-size: 14px;
   line-height: 1.5;
 }
 
-[data-theme="light"] body {
+/* Living aurora: fixed gradient layer drifting slowly behind all content */
+body::before {
+  content: "";
+  position: fixed;
+  inset: -12%;
+  z-index: -1;
+  pointer-events: none;
   background:
-    radial-gradient(1100px 480px at 85% -8%, rgba(77, 124, 15, 0.08), transparent 60%),
-    var(--bg);
+    radial-gradient(680px 420px at 14% 6%, rgba(79, 209, 197, 0.17), transparent 62%),
+    radial-gradient(780px 480px at 86% 2%, rgba(151, 127, 240, 0.19), transparent 62%),
+    radial-gradient(640px 440px at 66% 104%, rgba(242, 120, 159, 0.11), transparent 66%),
+    radial-gradient(520px 380px at 8% 92%, rgba(126, 231, 199, 0.09), transparent 62%);
+  will-change: transform, filter;
+}
+
+/* Slow aurora drift */
+@keyframes auroraShift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); filter: hue-rotate(0deg); }
+  33% { transform: translate3d(1.6%, 1.2%, 0) scale(1.03); filter: hue-rotate(12deg); }
+  66% { transform: translate3d(-1.4%, -0.8%, 0) scale(1.02); filter: hue-rotate(-9deg); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  body::before { animation: auroraShift 26s ease-in-out infinite; }
+}
+
+[data-theme="light"] body::before {
+  background:
+    radial-gradient(680px 420px at 14% 6%, rgba(42, 163, 155, 0.14), transparent 60%),
+    radial-gradient(780px 480px at 86% 2%, rgba(122, 92, 208, 0.12), transparent 62%),
+    radial-gradient(640px 440px at 66% 104%, rgba(217, 84, 140, 0.08), transparent 65%);
 }
 
 button,
@@ -546,17 +576,17 @@ h1, h2, h3, h4, p { margin: 0; }
   position: relative;
   overflow: hidden;
   padding: 25px 26px 22px;
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  background: linear-gradient(155deg, rgba(30, 41, 63, 0.85), rgba(14, 20, 34, 0.92));
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(155deg, rgba(26, 29, 56, 0.70), rgba(7, 9, 18, 0.86));
+  backdrop-filter: blur(18px) saturate(1.25);
+  -webkit-backdrop-filter: blur(18px) saturate(1.25);
   box-shadow: var(--shadow);
 }
 
 [data-theme="light"] .current-card {
-  border: 1px solid rgba(23, 36, 27, 0.08);
-  background: linear-gradient(155deg, rgba(255, 255, 255, 0.92), rgba(243, 246, 241, 0.95));
-  box-shadow: 0 18px 40px rgba(35, 55, 35, 0.14);
+  border: 1px solid rgba(25, 28, 45, 0.08);
+  background: linear-gradient(155deg, rgba(255, 255, 255, 0.92), rgba(245, 246, 251, 0.95));
+  box-shadow: 0 18px 40px rgba(38, 42, 82, 0.14);
 }
 
 /* Condition + day-night washes: stronger, blurred, calm */
@@ -574,7 +604,7 @@ h1, h2, h3, h4, p { margin: 0; }
 .current-card[data-daynight="day"][data-condition="clear"]::before {
   background:
     radial-gradient(340px 200px at 88% -6%, rgba(255, 206, 120, 0.30), transparent 65%),
-    radial-gradient(520px 320px at 70% 110%, rgba(184, 243, 109, 0.10), transparent 70%);
+    radial-gradient(520px 320px at 70% 110%, rgba(126, 231, 199, 0.12), transparent 70%);
 }
 
 .current-card[data-daynight="night"]::before {

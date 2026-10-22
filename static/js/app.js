@@ -426,9 +426,9 @@ function drawChart(data) {
   ctx.scale(dpr, dpr);
   ctx.clearRect(0, 0, width, height);
   const styles = getComputedStyle(document.documentElement);
-  const lime = styles.getPropertyValue("--lime").trim() || "#c8f169";
-  const muted = styles.getPropertyValue("--muted").trim() || "#92998b";
-  const gridColor = document.documentElement.dataset.theme === "light" ? "#e2e8dc" : "#262c24";
+  const lime = styles.getPropertyValue("--lime").trim() || "#7ee7c7";
+  const muted = styles.getPropertyValue("--muted").trim() || "#9aa2c4";
+  const gridColor = document.documentElement.dataset.theme === "light" ? "#e4e7f1" : "#222642";
   if (!days.length) {
     ctx.fillStyle = muted;
     ctx.font = "12px Manrope, sans-serif";
@@ -463,7 +463,7 @@ function drawChart(data) {
   highs.forEach((v, i) => { const px = x(i), py = y(v); i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); });
   [...lows].reverse().forEach((v, ri) => { ctx.lineTo(x(days.length - 1 - ri), y(v)); });
   ctx.closePath();
-  ctx.fillStyle = document.documentElement.dataset.theme === "light" ? "rgba(101,163,13,.12)" : "rgba(200,241,105,.08)";
+  ctx.fillStyle = document.documentElement.dataset.theme === "light" ? "rgba(13,143,116,.12)" : "rgba(126,231,199,.08)";
   ctx.fill();
 
   const line = (values, color, dashed) => {
