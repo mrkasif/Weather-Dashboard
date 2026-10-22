@@ -73,6 +73,33 @@ function unitSymbol() {
   return state.unit === "F" ? "°F" : "°C";
 }
 
+/* Signature micro-interaction: temperature counts to its new value
+   instead of snapping. Falls back to instant set under reduced motion. */
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+function animateTemperature(el, celsius) {
+  const raw = toDisplayTemp(celsius);
+  if (raw === null) { el.textContent = "—"; return; }
+  const target = Math.round(raw * 10) / 10;
+  const fromText = parseFloat(el.textContent);
+  if (Number.isNaN(fromText) || reducedMotion.matches) {
+    el.textContent = target.toFixed(1);
+    return;
+  }
+  // Start from a value slightly above/below target so digits visibly roll.
+  const from = Math.abs(target - fromText) < 0.5 ? fromText : fromText;
+  const startTime = performance.now();
+  const duration = 450;
+  const ease = (t) => 1 - Math.pow(1 - t, 3); // ease-out cubic
+
+  const step = (now) => {
+    const p = Math.min((now - startTime) / duration, 1);
+    el.textContent = (from + (target - from) * ease(p)).toFixed(1);
+    if (p < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
 function windDirLabel(deg) {
   if (deg === null || deg === undefined || Number.isNaN(Number(deg))) return null;
   const points = ["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSW","SW","WSW","W","WNW","NW","NNW"];
@@ -235,7 +262,7 @@ function renderHero(data) {
     setText("topbarDate", new Date().toLocaleDateString("en-US", { weekday: "long", month: "short", day: "numeric" }));
   }
 
-  setText("temperature", formatTemp(current.temperature));
+  animateTemperature($("#temperature"), current.temperature);
   const icon = $("#currentIcon");
   icon.src = iconUrl(current.icon);
   icon.alt = current.description || "Current weather";
