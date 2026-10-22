@@ -306,28 +306,10 @@ def health():
             database_status = "connected"
         except Exception:
             database_status = "unavailable"
-    mongo_env = os.getenv("MONGODB_URI", "")
-    diag = {
-        "present": bool(mongo_env),
-        "length": len(mongo_env),
-        "scheme_ok": mongo_env.startswith("mongodb+srv://"),
-        "has_credentials": mongo_env.count("@") >= 1,
-        "client_created": False,
-        "atlas_reachable": False,
-    }
-    if mongo_env:
-        try:
-            client = MongoClient(mongo_env, serverSelectionTimeoutMS=4000)
-            diag["client_created"] = True
-            client.admin.command("ping")
-            diag["atlas_reachable"] = True
-        except Exception:
-            pass
     return jsonify({
         "status": "ok",
         "weather_api_configured": bool(OPENWEATHER_API_KEY),
         "database": database_status,
-        "_mongo_env_diag": diag,
     })
 
 
