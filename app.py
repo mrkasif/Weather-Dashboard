@@ -306,10 +306,17 @@ def health():
             database_status = "connected"
         except Exception:
             database_status = "unavailable"
+    mongo_env = os.getenv("MONGODB_URI", "")
     return jsonify({
         "status": "ok",
         "weather_api_configured": bool(OPENWEATHER_API_KEY),
         "database": database_status,
+        "_mongo_env_diag": {
+            "present": bool(mongo_env),
+            "length": len(mongo_env),
+            "scheme_ok": mongo_env.startswith("mongodb+srv://"),
+            "has_credentials": mongo_env.count("@") >= 1,
+        },
     })
 
 
